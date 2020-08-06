@@ -2,16 +2,18 @@
 
 import tkinter as tk
 from tkinter.font import Font
+
 from random import randint
+
 
 
 top = tk.Tk()
 
-top.CORRECT = False
-
 BOLD = Font(top, weight='bold',size="30")
 BIG = Font(top, size=30)
 PIXEL = tk.PhotoImage(width=1, height=1)
+
+top.CORRECT = False
 
 top.correct_answer = None
 
@@ -28,8 +30,8 @@ class ScoreGrid (tk.Toplevel):
         for row in range(13):
             self.cells.append([])
             for column in range(13):
-                cell = tk.Button(self,width=20,height=20, bd=1,bg='red',text='',
-                                 image=PIXEL,compound='c')
+                cell = tk.Label(self, width=20, height=20, bd=1, bg='red', text='',
+                                 image=PIXEL, compound='c')
                 cell.grid(row=row,column=column)
                 self.cells[-1].append(cell)
 
@@ -52,6 +54,7 @@ def check_answer(event):
         if top.correct_answer == int(answer_area.get()):
             for widget in swap_color_widgets:
                 widget.config(bg='lightgreen')
+                score_grid.mark_cell('green')
             top.CORRECT = True
 
 
@@ -76,20 +79,20 @@ top.CORRECT = False
 top.bind('<Return>',check_answer)
 
 str1 = tk.StringVar()
-label1 = tk.Label(frame,textvariable=str1,font=BOLD)
+label1 = tk.Label(frame, textvariable=str1, font=BOLD)
 
 str2 = tk.StringVar()
-label2 = tk.Label(frame,textvariable=str2,font=BOLD)
+label2 = tk.Label(frame, textvariable=str2, font=BOLD)
 
 operator_label = tk.Label(frame, text="X")
 eq_label = tk.Label(frame, text='=')
 
-answer_area = tk.Entry(frame, width=5, bd=3,font=BOLD)
+answer_area = tk.Entry(frame, width=5, bd=3, font=BOLD)
 
 reset_problem()
 
 score_grid = ScoreGrid()
-score_grid.mark_cell('green')
+#score_grid.mark_cell('green')
 
 label1.grid(column=1, row=1)
 operator_label.grid(column=2, row=1)
